@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="Header" id="header">
+        <div class="logo">
+            <img src="../img/logo.png" alt="Logo" class="logo-image">
+        </div>
+        <nav>
+            <a href="#">Cameras</a>
+            <a href="#">Lenses</a>
+            <a href="#">Accessories</a>
+        </nav>
+        <div class="header-icons">
+            <a href="#" class="icon-link"><i class="fas fa-search"></i></a>
+            <a href="login.html" class="icon-link"><i class="fas fa-user"></i></a>
+            <a href="cart.html" class="icon-link"><i class="fas fa-shopping-cart"></i><span class="badge">3</span></a>
+        </div>
+    </div>
+
+    <!-- Product Detail Section -->
+    <div class="product-detail-container">
+        <div class="product-detail">
+            <div class="product-detail-image">
+                <img id="detail-product-image" src="" alt="Product Image">
+            </div>
+            <div class="product-detail-info">
+                <h1 id="detail-product-title"></h1>
+                <div id="detail-product-price" class="price"></div>
+
+                <div class="product-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">Brand:</span>
+                        <span id="detail-product-brand" class="spec-value"></span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Model:</span>
+                        <span id="detail-product-model" class="spec-value"></span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Sensor:</span>
+                        <span id="detail-product-sensor" class="spec-value"></span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Lens Mount:</span>
+                        <span id="detail-product-mount" class="spec-value"></span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Availability:</span>
+                        <span id="detail-product-availability" class="spec-value"></span>
+                    </div>
+                </div>
+                <p id="detail-product-description" class="description"></p>
+                <button class="add-to-cart-button">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="Footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Trinh Van Bo, Hanoi, Vietnam</p>
+                <p><i class="fas fa-phone"></i> +84 248 613 579</p>
+                <p><i class="fas fa-envelope"></i> camerastore@gmail.com</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="ASM1.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Cameras</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Lenses</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Accessories</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2023 Camera Store. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        // Product database
+        const products = {
+            "1": {
+                title: "Canon EF 24-70mm f/2.8L II",
+                price: "$1,799",
+                image: "../img/1.jpg",
+                brand: "Canon",
+                model: "EF 24-70mm f/2.8L II USM",
+                sensor: "N/A (Lens)",
+                mount: "EF Mount",
+                availability: "In Stock",
+                description: "Professional standard zoom lens with f/2.8 constant aperture. Features improved optics over its predecessor with one Super UD and two UD lens elements for reduced chromatic aberration."
+            },
+            "2": {
+                title: "Sony FE 70-200mm f/2.8 GM",
+                price: "$2,599",
+                image: "../img/2.jpg",
+                brand: "Sony",
+                model: "FE 70-200mm f/2.8 GM OSS",
+                sensor: "N/A (Lens)",
+                mount: "FE Mount",
+                availability: "In Stock",
+                description: "Professional G Master telephoto zoom lens with outstanding resolution and beautiful bokeh. Features Nano AR coating to minimize flare and ghosting."
+            },
+            "3": {
+                title: "Nikon Z 50mm f/1.8 S",
+                price: "$599",
+                image: "../img/3.jpg",
+                brand: "Nikon",
+                model: "Z 50mm f/1.8 S",
+                sensor: "N/A (Lens)",
+                mount: "Z Mount",
+                availability: "In Stock",
+                description: "Premium standard prime lens for Nikon Z mirrorless cameras. Features two extra-low dispersion elements and two aspherical elements for exceptional sharpness and clarity."
+            },
+            "5": {
+                title: "Sigma 35mm f/1.4 DG HSM",
+                price: "$899",
+                image: "../img/4.jpg",
+                brand: "Sigma",
+                model: "35mm f/1.4 DG HSM Art",
+                sensor: "N/A (Lens)",
+                mount: "Multiple mounts available",
+                availability: "In Stock",
+                description: "Premium wide-angle prime lens with fast f/1.4 aperture. Part of Sigma's Art line, featuring exceptional optical performance with FLD and SLD glass elements."
+            },
+            "6": {
+                title: "Canon EOS 5D Mark IV",
+                price: "$2,499",
+                image: "../img/5.jpg",
+                brand: "Canon",
+                model: "EOS 5D Mark IV",
+                sensor: "30.4MP Full Frame CMOS",
+                mount: "EF Mount",
+                availability: "In Stock",
+                description: "Professional full-frame DSLR camera with 30.4MP sensor, 4K video, and Dual Pixel CMOS AF. Features a 61-point AF system and built-in GPS."
+            },
+            "7": {
+                title: "Tamron 28-75mm f/2.8 Di III",
+                price: "$799",
+                image: "../img/6.jpg",
+                brand: "Tamron",
+                model: "28-75mm f/2.8 Di III RXD",
+                sensor: "N/A (Lens)",
+                mount: "Sony E Mount",
+                availability: "In Stock",
+                description: "Compact standard zoom lens for Sony full-frame mirrorless cameras. Features RXD stepping motor for quiet autofocus and moisture-resistant construction."
+            },
+            "8": {
+                title: "Fujifilm XF 56mm f/1.2 R",
+                price: "$999",
+                image: "../img/Fuji-56mm-f1.2-R.jpg",
+                brand: "Fujifilm",
+                model: "XF 56mm f/1.2 R",
+                sensor: "N/A (Lens)",
+                mount: "Fujifilm X Mount",
+                availability: "In Stock",
+                description: "Fast portrait prime lens for Fujifilm X-series cameras. Features a large f/1.2 aperture for beautiful bokeh and excellent low-light performance."
+            },
+            "9": {
+                title: "Sony A7 III",
+                price: "$1,999",
+                image: "../img/7.jpg",
+                brand: "Sony",
+                model: "A7 III",
+                sensor: "24.2MP Full Frame Exmor R CMOS",
+                mount: "Sony E Mount",
+                availability: "In Stock",
+                description: "Full-frame mirrorless camera with 24.2MP sensor, 4K video, and 693-point AF system. Features 10fps continuous shooting and in-body image stabilization."
+            },
+            "10": {
+                title: "Nikon AF-S 85mm f/1.4G",
+                price: "$1,599",
+                image: "../img/8.jpg",
+                brand: "Nikon",
+                model: "AF-S NIKKOR 85mm f/1.4G",
+                sensor: "N/A (Lens)",
+                mount: "F Mount",
+                availability: "In Stock",
+                description: "Professional portrait lens with fast f/1.4 aperture. Features Nano Crystal Coat to reduce ghosting and flare, and a Silent Wave Motor for quiet autofocus."
+            },
+            "11": {
+                title: "Canon RF 15-35mm f/2.8L",
+                price: "$2,299",
+                image: "../img/9.jpg",
+                brand: "Canon",
+                model: "RF 15-35mm f/2.8L IS USM",
+                sensor: "N/A (Lens)",
+                mount: "RF Mount",
+                availability: "In Stock",
+                description: "Ultra-wide zoom lens for Canon RF mount mirrorless cameras. Features 5-stop image stabilization, weather sealing, and fast f/2.8 constant aperture."
+            },
+            "12": {
+                title: "Leica Q2",
+                price: "$5,995",
+                image: "../img/10c.jpg",
+                brand: "Leica",
+                model: "Q2",
+                sensor: "47.3MP Full Frame CMOS",
+                mount: "Fixed Lens",
+                availability: "In Stock",
+                description: "Premium compact camera with fixed 28mm f/1.7 Summilux lens. Features 47.3MP sensor, 4K video, and weather-sealed body construction."
+            }
+        };
+
+        // Display product info
+        if (productId && products[productId]) {
+            const product = products[productId];
+            document.getElementById('detail-product-title').textContent = product.title;
+            document.getElementById('detail-product-price').textContent = product.price;
+            document.getElementById('detail-product-image').src = product.image;
+            document.getElementById('detail-product-brand').textContent = product.brand;
+            document.getElementById('detail-product-model').textContent = product.model;
+            document.getElementById('detail-product-sensor').textContent = product.sensor;
+            document.getElementById('detail-product-mount').textContent = product.mount;
+            document.getElementById('detail-product-availability').textContent = product.availability;
+            document.getElementById('detail-product-description').textContent = product.description;
+            document.title = `${product.title} | Camera Store`;
+        } else {
+            // Handle case when product not found
+            document.querySelector('.product-detail-container').innerHTML = `
+                <div class="product-not-found">
+                    <h2>Product Not Found</h2>
+                    <p>The requested product could not be found.</p>
+                    <a href="ASM1.html">Return to Home Page</a>
+                </div>
+            `;
+        }
+
+        // Add to cart button functionality
+        document.querySelector('.add-to-cart-button').addEventListener('click', function () {
+            alert('Product added to cart!');
+            // Here you would normally add the product to the cart
+        });
+
+        // Header scroll behavior (same as main page)
+        const header = document.getElementById('header');
+        let lastScrollPosition = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollPosition = window.scrollY;
+
+            if (currentScrollPosition > 100 && currentScrollPosition > lastScrollPosition) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+
+            lastScrollPosition = currentScrollPosition;
+        });
+    </script>
+    <script src="jsofhome.js"></script>
+</body>
+
+</html>
