@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng - Camera Store</title>
+    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="Header" id="header">
+        <div class="logo">
+            <img src="../img/logo.png" alt="Logo" class="logo-image">
+        </div>
+        <nav>
+            <a href="ASM1.html">Cameras</a>
+            <a href="#">Lenses</a>
+            <a href="#">Accessories</a>
+        </nav>
+        <div class="header-icons">
+            <a href="#" class="icon-link"><i class="fas fa-search"></i></a>
+            <a href="../login/Login.html" class="icon-link"><i class="fas fa-user"></i></a>
+            <a href="cart.html" class="icon-link"><i class="fas fa-shopping-cart"></i><span class="badge">0</span></a>
+        </div>
+    </div>
+
+    <!-- Cart Section -->
+    <div class="cart-container">
+        <h1>Your Cart</h1>
+        <div class="cart-content">
+            <div class="cart-items">
+                <div class="cart-header">
+                    <div class="header-item product">Product</div>
+                    <div class="header-item price">Unit Price</div>
+                    <div class="header-item quantity">Quantity</div>
+                    <div class="header-item total">Total</div>
+                    <div class="header-item action">Action</div>
+                </div>
+                <div class="cart-items-list" id="cartItems">
+                    <!-- Cart items will be inserted here by JavaScript -->
+                </div>
+            </div>
+            <div class="cart-summary">
+                <h2>Cart Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping Fee:</span>
+                    <span id="shipping">$0</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="total">$0</span>
+                </div>
+                <button class="checkout-button">Checkout</button>
+                <a href="ASM1.html" class="continue-shopping">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="Footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Trinh Van Bo, Hanoi, Vietnam</p>
+                <p><i class="fas fa-phone"></i> +84 248 613 579</p>
+                <p><i class="fas fa-envelope"></i> camerastore@gmail.com</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="ASM1.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Cameras</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Lenses</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Accessories</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2023 Camera Store. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Load cart from localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartItemsContainer = document.getElementById('cartItems');
+        const subtotalElement = document.getElementById('subtotal');
+        const shippingElement = document.getElementById('shipping');
+        const totalElement = document.getElementById('total');
+        const cartBadge = document.querySelector('.header-icons .badge');
+
+        // Update cart badge
+        function updateCartBadge() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartBadge.textContent = totalItems;
+        }
+
+        // Format price
+        function formatPrice(price) {
+            return '$' + price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Update cart display
+        function updateCartDisplay() {
+            // Clear current items
+            cartItemsContainer.innerHTML = '';
+
+            // Calculate totals
+            let subtotal = 0;
+
+            // Add each item to cart
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <div class="cart-item-product">
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="product-info">
+                            <h3>${item.title}</h3>
+                            <button class="remove-item" data-index="${index}">Xóa</button>
+                        </div>
+                    </div>
+                    <div class="cart-item-price">${formatPrice(item.price)}</div>
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn minus" data-index="${index}">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn plus" data-index="${index}">+</button>
+                    </div>
+                    <div class="cart-item-total">${formatPrice(itemTotal)}</div>
+                    <div class="cart-item-action">
+                        <button class="remove-item" data-index="${index}"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+            });
+
+            // Calculate shipping (free for orders over $500, otherwise $20)
+            const shipping = subtotal >= 500 ? 0 : 20;
+            const total = subtotal + shipping;
+
+            // Update totals
+            subtotalElement.textContent = formatPrice(subtotal);
+            shippingElement.textContent = shipping === 0 ? 'Free' : formatPrice(shipping);
+            totalElement.textContent = formatPrice(total);
+
+            // Update cart badge
+            updateCartBadge();
+
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.quantity-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    if (this.classList.contains('plus')) {
+                        cart[index].quantity += 1;
+                    } else if (this.classList.contains('minus')) {
+                        if (cart[index].quantity > 1) {
+                            cart[index].quantity -= 1;
+                        } else {
+                            cart.splice(index, 1);
+                        }
+                    }
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartDisplay();
+                });
+            });
+
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function () {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    cart.splice(index, 1);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartDisplay();
+                });
+            });
+        }
+
+        // Initialize cart display
+        updateCartDisplay();
+
+        // Checkout button
+        document.querySelector('.checkout-button').addEventListener('click', function () {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+            } else {
+                alert('Payment functionality will be implemented here!');
+                // In a real app, you would redirect to checkout page
+            }
+        });
+
+        // Header scroll behavior
+        const header = document.getElementById('header');
+        let lastScrollPosition = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollPosition = window.scrollY;
+
+            if (currentScrollPosition > 100 && currentScrollPosition > lastScrollPosition) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+
+            lastScrollPosition = currentScrollPosition;
+        });
+    </script>
+</body>
+</html>
