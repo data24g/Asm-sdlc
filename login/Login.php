@@ -26,10 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['user_role'] = $role;
                 
                 // Chuyển hướng theo role
-                if ($role == 'admin') {
-                    header("Location: ../admin/ASM1.html");
+                if ($role == '2') {
+                    header("Location: ../admin/ASM1.php");
                 } else {
-                    header("Location: ../form-home/ASM1.html");
+                    header("Location: ../form-home/home.php");
                 }
                 exit();
             } else {
